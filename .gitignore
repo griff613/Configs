@@ -1,0 +1,10 @@
+*
+
+
+!.gitignore
+!.vimrc
+!alacritty/alacritty.yml
+!nvim/
+!torbrowser/
+!xmonad/
+!xmobar/

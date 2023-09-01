@@ -4,7 +4,7 @@
 !.gitignore
 !.vimrc
 !alacritty/alacritty.yml
-!nvim/
+!nvim
 !torbrowser/
 !xmonad/
 !xmobar/

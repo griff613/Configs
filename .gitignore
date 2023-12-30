@@ -39,4 +39,10 @@ yamllint/
 .viminfo
 DT_CONFIG/
 Electron/
-
+Postman/
+PostmanAgent/
+bleachbit/
+code-oss/
+create-next-app-nodejs/
+awesome/
+nextjs-nodejs/

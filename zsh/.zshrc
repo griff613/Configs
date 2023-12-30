@@ -1,39 +1,18 @@
-# If not running interactively, don't do anything
-#
-[[ $- != *i* ]] && return
+# Lines configured by zsh-newuser-install
+plugins(ssh-agent)
 
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
 
-# Auto load SSH
-env=~/.ssh/agent.env
+setopt extendedglob nomatch notify
+bindkey -v
 
-agent_load_env () { test -f "$env" && . "$env" >| /dev/null ; }
+# End of lines added by compinstall (auto-complete)
+zstyle :compinstall filename '/home/zach/.zshrc'
+autoload -Uz compinit
+compinit
 
-agent_start () {
-    (umask 077; ssh-agent >| "$env")
-    . "$env" >| /dev/null ; }
-
-agent_load_env
-
-# agent_run_state: 0=agent running w/ key; 1=agent w/o key; 2=agent not running
-agent_run_state=$(ssh-add -l >| /dev/null 2>&1; echo $?)
-
-if [ ! "$SSH_AUTH_SOCK" ] || [ $agent_run_state = 2 ]; then
-    agent_start
-    ssh-add home/zach/.ssh/id_ed25519.pub
-    setxkbmap us -v dvorak &
-elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
-    ssh-add ~/.ssh/id_ed25519.pub
-fi
-
-unset env
-
-neofetch
-
-# Propmt
-PS1="\[\e[36m\]\W > \[\e[m\] "
-# PS2=">>" # what shows on multiline commands.
-
-set -o vi
 
 ##--------------------Aliases-------------------##
 
@@ -45,7 +24,6 @@ alias rm='rm -i'
 alias vim='nvim'
 alias grep='grep -color=auto'
 alias wmconf='vim ~/.config/awesome/rc.lua'
-alias vimshortcuts='cat ~/.config/nvim/lua/core/keymaps.lua'
 
 # DIRS
 alias home='cd'

@@ -19,9 +19,10 @@ myBorderWidth   = 3
 myModMask       = mod4Mask
 myNormalBorderColor  = "#000000"
 myFocusedBorderColor = "#03C04A"
-myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
+myWorkspaces    = [" Crome "," Term "," Code ","4","5","6","7","8","9"]
 myHiddenColor :: String
 myHiddenColor = "asoeuth"
+
 
 -------------------------------- XMOBAR ----------------------------------
 myXmobarPP :: PP
@@ -79,7 +80,8 @@ myLayout = avoidStruts (tiled ||| Mirror tiled ||| Full)
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm,               xK_t     ), spawn $ XMonad.terminal conf)          -- launch a terminal
     , ((modm,               xK_p     ), spawn "dmenu_run")                     -- launch dmenu
-    , ((modm,               xK_b     ), spawn "chrome")          -- launch chrome
+    , ((modm,               xK_b     ), spawn "google-chrome-stable")          -- launch chrome
+    , ((modm,               xK_v     ), spawn "code")          -- launch chrome
     , ((modm,               xK_c     ), kill)                                  -- close focused window
     , ((modm,               xK_space ), sendMessage NextLayout)                -- Rotate through the available layout algorithms
     , ((modm,               xK_n     ), refresh)                               -- Resize viewed windows to the correct size
@@ -116,16 +118,16 @@ main :: IO ()
 main = xmonad
      . ewmhFullscreen
      . ewmh
-     . withEasySB (statusBarProp "xmobar -x 0 ~/.config/xmobar/sceptre.xmobarrc" (pure myXmobarPP)) defToggleStrutsKey
-     . withEasySB (statusBarProp "xmobar -x 1 ~/.config/xmobar/samsung.xmobarrc" (pure myXmobarPP)) defToggleStrutsKey
+     . withSB (statusBarProp "xmobar -x 0 ~/.config/xmobar/sceptre.xmobarrc" (pure myXmobarPP))  
+     . withSB (statusBarProp "xmobar -x 1 ~/.config/xmobar/samsung.xmobarrc" (pure myXmobarPP)) 
      $ myConfig
 
 myConfig = def
-  { modMask             = myModMask
+  { keys                = myKeys
+  , modMask             = myModMask
   , layoutHook          = spacingWithEdge 2 $ myLayout
   , terminal            = myTerminal
   , borderWidth         = myBorderWidth
-  , keys                = myKeys
   , normalBorderColor   = myNormalBorderColor
   , focusedBorderColor  = myFocusedBorderColor
   , workspaces          = myWorkspaces

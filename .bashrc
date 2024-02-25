@@ -48,20 +48,20 @@ alias grep='grep -color=auto'
 alias wmconf='helix ~/.config/awesome/rc.lua'
 alias vimshortcuts='cat ~/.config/nvim/lua/core/keymaps.lua'
 alias bb='sudo bleachbit --clean system.cache system.localizations system.trash system.tmp'
+alias bigpackage='expac "%n %m" -l/'\n/' -Q $(pacman -Qq) | sort -rhk 2 | less'
 
 # CONFIGS
 alias alconf='helix ~/.config/alacritty/alacritty.yml' # Alacritty config
 alias xconf='sudo nvim /etc/X11/xorg.conf' # Xorg config
-alias nvimconf='nvim ~/.nvimrc' # nvim config
-alias xmconf='nvim ~/.config/xmonad/xmonad.hs'
-alias xmob0='nvim ~/.config/xmobar/sceptre.xmobarrc'
-alias xmob1='nvim ~/.config/xmobar/samsung.xmobarrc'
 alias pacconf='sudo nvim /etc/pacman.conf'
+
+#Helix
+alias vim='helix'
+alias hx='helix'
+
 
 # OVERWRITES
 alias grep='grep --color=auto'
-# alias ls='exa --long --git'
-# alias la='exa --long --git --grid --all'
 
 # AlIAS EDITING
 alias al='helix ~/.bashrc'

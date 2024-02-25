@@ -1,0 +1,13 @@
+[language-server.mylang-lsp]
+command = "mylang-lsp"
+args = ["--stdio"]
+config = { provideFormatter = true }
+environment = { "ENV1" = "value1", "ENV2" = "value2" }
+
+[language-server.efm-lsp-prettier]
+command = "efm-langserver"
+
+[language-server.efm-lsp-prettier.config]
+documentFormatting = true
+languages = { typescript = [ { formatCommand ="prettier --stdin-filepath ${INPUT}", formatStdin = true } ] }
+

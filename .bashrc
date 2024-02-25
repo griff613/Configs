@@ -19,10 +19,11 @@ agent_run_state=$(ssh-add -l >| /dev/null 2>&1; echo $?)
 
 if [ ! "$SSH_AUTH_SOCK" ] || [ $agent_run_state = 2 ]; then
     agent_start
-    ssh-add home/zach/.ssh/id_ed25519.pub
+    ssh-add ~/.ssh/id_ed25519
+    # ssh-add home/zach/.ssh/id_ed25519.pub
     setxkbmap us -v dvorak &
 elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
-    ssh-add ~/.ssh/id_ed25519.pub
+    ssh-add ~/.ssh/id_ed25519
 fi
 
 unset env
@@ -44,19 +45,12 @@ alias mv='mv -i'
 alias rm='rm -i'
 alias vim='nvim'
 alias grep='grep -color=auto'
-alias wmconf='vim ~/.config/awesome/rc.lua'
+alias wmconf='helix ~/.config/awesome/rc.lua'
 alias vimshortcuts='cat ~/.config/nvim/lua/core/keymaps.lua'
-
-# DIRS
-alias home='cd'
-alias ddp='cd Projects/deck-design-pro; vim .'
-
-# APPS
-alias chrome='google-chrome-stable &'
-alias neo='neofetch' # Print the cool arch thing
+alias bb='sudo bleachbit --clean system.cache system.localizations system.trash system.tmp'
 
 # CONFIGS
-alias alconf='nvim ~/.config/alacritty/alacritty.yml' # Alacritty config
+alias alconf='helix ~/.config/alacritty/alacritty.yml' # Alacritty config
 alias xconf='sudo nvim /etc/X11/xorg.conf' # Xorg config
 alias nvimconf='nvim ~/.nvimrc' # nvim config
 alias xmconf='nvim ~/.config/xmonad/xmonad.hs'
@@ -70,7 +64,7 @@ alias grep='grep --color=auto'
 # alias la='exa --long --git --grid --all'
 
 # AlIAS EDITING
-alias al='nvim ~/.bashrc'
+alias al='helix ~/.bashrc'
 alias cal='less ~/.bashrc'
 alias sauce='source ~/.bashrc'
 
@@ -79,7 +73,6 @@ alias killx='pkill -15 Xorg'
 alias x='startx'
 
 # PROGRAMMING
-alias idea='/opt/idea-IU-223.8617.56/bin/idea.sh &'
 alias py='python3'
 
 # VPN
@@ -118,7 +111,7 @@ alias internet='ping archlinux.org'
 PATH="$HOME/.local/bin:$PATH"
 
 # Ergodox
-alias ergodox='nvim $ERGO/keymap.c'
+alias ergodox='helix $ERGO/keymap.c'
 alias keys='cat ~/.config/keymap.txt'
 
 # Look at disk usage by dir (pretty cool)

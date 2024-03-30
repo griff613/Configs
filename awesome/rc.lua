@@ -1,3 +1,10 @@
+
+-- { rule = {name = "helix"}, 
+--     properties = { 
+--         maximized_vertical = true,
+--         tag = "z"
+--     }}
+
 -- If LuaRocks is installed, make sure that packages installed through it are
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
@@ -39,6 +46,7 @@ if awesome.startup_errors then
     })
 end
 
+
 -- Handle runtime errors after startup
 do
     local in_error = false
@@ -62,7 +70,7 @@ end
 beautiful.init("/home/zach/.config/awesome/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "xfce4-terminal"
+terminal = "alacritty"
 browser = "google-chrome-stable"
 editor = os.getenv("EDITOR") or "helix"
 editor_cmd = terminal .. " -e " .. editor
@@ -78,12 +86,11 @@ modkey = "Mod4"
 awful.layout.layouts = {
 		awful.layout.suit.tile,
 		awful.layout.suit.tile.bottom,
-		awful.layout.suit.tile.top,
-    awful.layout.suit.max.fullscreen,
-		awful.layout.suit.floating,
-    -- awful.layout.suit.tile,
+		-- awful.layout.suit.tile.top,
+    -- awful.layout.suit.max.fullscreen,
+		-- awful.layout.suit.floating,
     -- awful.layout.suit.fair,
-    -- awful.layout.suit.fair.horizontal,
+    -- awful.layout.suit.fair.horizon
     -- awful.layout.suit.spiral.dwindle,
     -- awful.layout.suit.max,
     -- awful.layout.suit.magnifier,
@@ -125,6 +132,7 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- [[[ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
+
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -185,6 +193,18 @@ awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
 
+    -- btrfs root df
+    myrootfs = awful.widget.watch(
+        "btrfs filesystem df -g /",
+        600, -- 10 minutes
+        function(widget, stdout)
+            local total, used  = string.match(stdout, "Data.-total=(%d+%.%d+)GiB.-used=(%d+%.%d+)GiB")
+            local percent_used = math.ceil((tonumber(used) / tonumber(total)) * 100)
+
+            -- customize here
+            widget:set_text(" [/: " .. percent_used .. "%] ")
+        end
+    )
     -- Each screen has its own tag table.
     awful.tag({ "z", "a", "c", "h", "a", "r", "i", "a", "h" }, s, awful.layout.layouts[1])
 
@@ -220,8 +240,10 @@ awful.screen.connect_for_each_screen(function(s)
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
+            myrootfs,
             s.mytaglist,
             s.mypromptbox,
+            s.myRootfs,
         },
         s.mytasklist, -- Middle widget
         {             -- Right widgets

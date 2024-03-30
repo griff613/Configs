@@ -1,63 +1,92 @@
 # Lines configured by zsh-newuser-install
-plugins(ssh-agent)
-
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
-
-setopt extendedglob nomatch notify
+HISTFILE=$HOME/.histfile
+HISTSIZE=10000
+SAVEHIST=10000
+setopt autocd extendedglob notify
+unsetopt beep
 bindkey -v
+bindkey "^R" history-incremental-search-backward
 
-# End of lines added by compinstall (auto-complete)
+# End of lines configured by zsh-newuser-install
+
+# The following lines were added by compinstall
 zstyle :compinstall filename '/home/zach/.zshrc'
-autoload -Uz compinit
-compinit
 
+autoload -Uz vcs_info
+precmd() {vcs_info}
+zstyle ':vcs_info:git:*' formats '%b '
+# compinit
 
-##--------------------Aliases-------------------##
+setopt PROMPT_SUBST
+PROMPT='[ %F{green}%*%f %F{blue}%~%f %F{red}${vcs_info_msg_0_}%f]$ '
+neofetch
+# Env
+export HOME="/home/zach"
 
-# GENERAL
+export ZSHRC="$HOME/.config/zsh/.zshrc"
+export ALACRITTY_CONFIG="$HOME/.config/alacritty/alacritty.toml"
+export XORG_CONFIG="/etc/X11/xorg.conf"
+export PACMAN_CONFIG="/etc/pacman.conf"
+export AWESOME_CONFIG="$HOME/.config/awesome/rc.lua"
+
+export RUST_BACKTRACE=1
+export PROJECT_DIRECTORY="~/Projects"
+export SHELL="/bin/zsh"
+export STE="$HOME/Projects/rust-projects/simple-text-editor/"
+
+# End of lines added by compinstall
+
+# General
 alias update='sudo pacman -Syu; sudo yay -Syu' # Update pacman and AUR`
 alias fixmonitor='autorandr -l SceptreSamsung'
 alias mv='mv -i'
 alias rm='rm -i'
-alias vim='nvim'
+alias vim='helix'
 alias grep='grep -color=auto'
-alias wmconf='vim ~/.config/awesome/rc.lua'
+alias wmconf='helix $HOME/.config/awesome/rc.lua'
+alias bb='sudo bleachbit --clean system.cache system.localizations system.trash system.tmp'
+alias bigpackage='expac "%n %m" -l/'\n/' -Q $(pacman -Qq) | sort -rhk 2 | less'
+alias why='ncdu'
+alias h='history'
+alias ps='ps -au'
+alias k='setxkbmap us -v dvorak'
+alias postgres='psql -U postgres'
+alias down='sudo shutdown now'
 
-# DIRS
-alias home='cd'
-alias ddp='cd Projects/deck-design-pro; vim .'
-
-# APPS
-alias chrome='google-chrome-stable &'
-alias neo='neofetch' # Print the cool arch thing
+# cd ez
+alias projd='cd ~/Projects'
+alias rustd='cd ~/Projects/rust-projects'
+alias steved='cd $PROJECT_DIRECTORY/steve-and-sons'
+alias ste='cd $STE'
 
 # CONFIGS
-alias alconf='nvim ~/.config/alacritty/alacritty.yml' # Alacritty config
-alias xconf='sudo nvim /etc/X11/xorg.conf' # Xorg config
-alias nvimconf='nvim ~/.nvimrc' # nvim config
-alias xmconf='nvim ~/.config/xmonad/xmonad.hs'
-alias xmob0='nvim ~/.config/xmobar/sceptre.xmobarrc'
-alias xmob1='nvim ~/.config/xmobar/samsung.xmobarrc'
-alias pacconf='sudo nvim /etc/pacman.conf'
+alias alconf='helix $ALACRITTY_CONFIG' # Alacritty config
+alias xconf='sudo helix $XORG_CONFIG' # Xorg config
+alias pacconf='sudo helix $PACMAN_CONFIG'
+alias aweconf='helix $AWESOME_CONFIG'
+alias al='helix $ZSHRC'
+alias cal='less $ZSHRC'
+alias sauce='source $ZSHRC'
+
+# Text Editor
+alias vim='helix'
+alias hx='helix'
+
 
 # OVERWRITES
 alias grep='grep --color=auto'
-# alias ls='exa --long --git'
-# alias la='exa --long --git --grid --all'
+alias ls='ls -lah --color=auto'
+alias ll='ls -lah --color=auto'
+alias h='history'
+alias ps='ps -au'
 
 # AlIAS EDITING
-alias al='nvim ~/.bashrc'
-alias cal='less ~/.bashrc'
-alias sauce='source ~/.bashrc'
 
 # Xorg CONTROL
 alias killx='pkill -15 Xorg'
 alias x='startx'
 
 # PROGRAMMING
-alias idea='/opt/idea-IU-223.8617.56/bin/idea.sh &'
 alias py='python3'
 
 # VPN
@@ -72,6 +101,7 @@ alias torstat='sudo systemctl status tor'
 alias tor='torbrowser-launcher'
 
 # GIT
+alias gcob='git checkout -b'
 alias gs='git status'
 alias gp='git push'
 alias ga='git add .'
@@ -79,11 +109,6 @@ alias ga='git add .'
 function gc() {
 	git commit -m "$(date)"
 }
-
-
-# Quick Reference
-alias ref='nvim ~/ref.txt'
-alias cref='cat ~/ref.txt'
 
 # Start/Enable
 alias start='sudo systemctl start'
@@ -93,22 +118,12 @@ alias enab='sudo systemctl enable'
 alias internet='ping archlinux.org'
 
 # path for homegrown executables
-PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="/usr/lib/rustup/bin/rust-analyzer:$PATH"
+
 
 # Ergodox
-alias ergodox='nvim $ERGO/keymap.c'
-alias keys='cat ~/.config/keymap.txt'
+alias ergodox='helix $ERGO/keymap.c'
+alias keys='cat $HOME/.config/keymap.txt'
 
 # Look at disk usage by dir (pretty cool)
-alias why='ncdu'
-
-
-export XMONAD_CONFIG_DIR="~/.config/.xmonad/xmonad.hs"
-alias vimhelp="cat ~/.config/nvim/lua/bullgooselooney/remap.lua"
-alias ls='ls --color=auto'
-alias ll='ls -lah --color=auto'
-alias h='history'
-alias ps='ps -au'
-alias k='setxkbmap us -v dvorak'
-alias postgres='psql -U postgres'
-alias down='sudo shutdown now'

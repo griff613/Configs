@@ -1,4 +1,4 @@
-theme = "onedark"
+theme = "gruvbox_dark_soft"
 
 [keys.normal]
 '0' = "goto_line_start"
@@ -7,21 +7,25 @@ C-h = "jump_backward"
 C-l = "jump_forward"
 C-q = ":config-reload"
 
+A-q = ':lsp-restart'
+A-h = ":buffer-previous"
+A-l = ":buffer-next"
+A-c = ":buffer-close"
+A-o = ":config-open"
 
-[keys.select]
-'0' = "goto_line_start"
-'$' = "goto_line_end"
+# See where the 'comment lines' command is, try to change it to gcc
+# g-c-c = ""
 
 [editor]
 cursorline = true
 line-number = "relative"
-scrolloff = 25
+scrolloff = 5
 middle-click-paste = true
 shell = ["sh", "-c"]
 bufferline = "always"
 color-modes = true
 gutters = ["spacer", "diagnostics", "spacer", "diff", "spacer", "line-numbers", "spacer"]
-
+workspace-lsp-roots = ["/home/zach/Projects/google-apps-script", "home/zach/Projects/rust-projects"]
 [editor.statusline]
 separator= " | "
 left=["mode", "spinner", "file-base-name"]
@@ -47,6 +51,6 @@ render = true
 
 [editor.soft-wrap]
 enable = true
-max-wrap = 25 # increase value to reduce forced mid-word wrapping
+max-wrap = 50 # increase value to reduce forced mid-word wrapping
 max-indent-retain = 0
 wrap-indicator = ""  # set wrap-indicator to "" to hide it  

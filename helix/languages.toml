@@ -1,13 +1,46 @@
-[language-server.mylang-lsp]
-command = "mylang-lsp"
-args = ["--stdio"]
-config = { provideFormatter = true }
-environment = { "ENV1" = "value1", "ENV2" = "value2" }
+[language-server.rust-analyzer]
+command = "rust-analyzer"
 
-[language-server.efm-lsp-prettier]
-command = "efm-langserver"
+[language-server.rust-analyzer.config]
+inlayHints.bindingModeHints.enable = false
+inlayHints.closingBraceHints.minLines = 10
+inlayHints.closureReturnTypeHints.enable = "with_block"
+inlayHints.discriminantHints.enable = "fieldless"
+inlayHints.lifetimeElisionHints.enable = "skip_trivial"
+inlayHints.typeHints.hideClosureInitialization = false
 
-[language-server.efm-lsp-prettier.config]
-documentFormatting = true
-languages = { typescript = [ { formatCommand ="prettier --stdin-filepath ${INPUT}", formatStdin = true } ] }
+[language-server.rust-analyzer.config.check]
+command = "clippy"
 
+[[language]]
+name = "rust"
+scope = "source.rust"
+injection-regex = "rust"
+file-types = ["rs"]
+roots = ["Cargo.toml", "Cargo.lock"]
+auto-format = false
+comment-token = "//"
+language-servers = [ "rust-analyzer" ]
+indent = { tab-width = 4, unit = "    " }
+
+
+[language.auto-pairs]
+'(' = ')'
+'{' = '}'
+'[' = ']'
+'"' = '"'
+'`' = '`'
+
+[[grammar]]
+name = "rust"
+source = { git = "https://github.com/tree-sitter/tree-sitter-rust", rev = "0431a2c60828731f27491ee9fdefe25e250ce9c9" }
+
+[[language]]
+name = "javascript"
+language-id = "javascript"
+scope = "source.js"
+injection-regex = "mylang"
+file-types = ["js", "ts", "gs"]
+comment-token = "//"
+indent = { tab-width = 2, unit = "  " }
+language-servers = [ "typescript-language-server" ]

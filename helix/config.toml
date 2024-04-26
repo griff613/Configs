@@ -12,6 +12,8 @@ A-h = ":buffer-previous"
 A-l = ":buffer-next"
 A-c = ":buffer-close"
 A-o = ":config-open"
+C-y = ":clipboard-yank"
+C-p = ":clipboard-paste-after"
 
 # See where the 'comment lines' command is, try to change it to gcc
 # g-c-c = ""
@@ -34,11 +36,6 @@ right=["separator", "file-encoding" ,"position", "position-percentage", "separat
 mode.normal = "NORMAL"
 mode.insert = "INSERT"
 mode.select = "SELECT"
-
-[editor.cursor-shape]
-insert = "bar"
-normal = "block"
-select = "underline"
 
 [editor.file-picker]
 hidden =  false

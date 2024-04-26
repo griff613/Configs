@@ -70,8 +70,8 @@ end
 beautiful.init("/home/zach/.config/awesome/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "alacritty"
-browser = "google-chrome-stable"
+terminal = "xfce4-terminal"
+browser = "firefox"
 editor = os.getenv("EDITOR") or "helix"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -298,9 +298,9 @@ globalkeys = gears.table.join(
         { description = "swap with next client by index", group = "client" }),
     awful.key({ modkey, "Shift" }, "k", function() awful.client.swap.byidx(-1) end,
         { description = "swap with previous client by index", group = "client" }),
-    awful.key({ modkey, }, ",", function() awful.screen.focus_relative(1) end,
+    awful.key({ modkey, }, "w", function() awful.screen.focus_relative(1) end,
         { description = "focus the next screen", group = "screen" }),
-    awful.key({ modkey, }, ".", function() awful.screen.focus_relative(-1) end,
+    awful.key({ modkey, }, "e", function() awful.screen.focus_relative(-1) end,
         { description = "focus the previous screen", group = "screen" }),
     awful.key({ modkey, }, "u", awful.client.urgent.jumpto,
         { description = "jump to urgent client", group = "client" }),
@@ -318,7 +318,7 @@ globalkeys = gears.table.join(
         { description = "open a terminal", group = "launcher" }),
 
     awful.key({ modkey, }, "b", function() awful.spawn(browser) end,
-        { description = "Open google chrome", group = "launcher" }),
+        { description = "Open Browser", group = "launcher" }),
 
     awful.key({ modkey, }, "q", awesome.restart,
         { description = "reload awesome", group = "awesome" }),
@@ -532,7 +532,7 @@ awful.rules.rules = {
                 "Wpa_gui",
                 "veromix",
                 "xtightvncviewer",
-								"google-chrome-stable"
+								-- "firefox" -- this made the window go in floating mode
 							},
 
             -- Note that the name property shown in xprop might be set slightly after creation of the client

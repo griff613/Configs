@@ -1,44 +1,66 @@
 # Lines configured by zsh-newuser-install
 HISTFILE=$HOME/.histfile
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=20000
+SAVEHIST=20000
 setopt autocd extendedglob notify
 unsetopt beep
 bindkey -v
 bindkey "^R" history-incremental-search-backward
+#### End of lines configured by zsh-newuser-install ####
 
-# End of lines configured by zsh-newuser-install
+# Auto load SSH
+env=~/.ssh/agent.env
+agent_load_env () { 
+  test -f "$env" && . "$env" >| /dev/null ; 
+}
+agent_start () {
+    (umask 077; ssh-agent >| "$env")
+    . "$env" >| /dev/null ; 
+}
+agent_load_env
+
+# agent_run_state: 0=agent running w/ key; 1=agent w/o key; 2=agent not running
+agent_run_state=$(ssh-add -l >| /dev/null 2>&1; echo $?)
+
+if [ ! "$SSH_AUTH_SOCK" ] || [ $agent_run_state = 2 ]; then
+    agent_start
+    ssh-add ~/.ssh/id_ed25519
+    startx
+    echo "$TTY"
+elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
+    ssh-add ~/.ssh/id_ed25519
+    echo "$TTY"
+fi
+unset env
 
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/zach/.zshrc'
-
 autoload -Uz vcs_info
 precmd() {vcs_info}
 zstyle ':vcs_info:git:*' formats '%b '
-# compinit
 
+# compinit
 setopt PROMPT_SUBST
 PROMPT='[ %F{green}%*%f %F{blue}%~%f %F{red}${vcs_info_msg_0_}%f]$ '
-neofetch
-# Env
-export HOME="/home/zach"
+# End of lines added by compinstall
 
+neofetch
+
+# Environment
+export HOME="/home/zach"
 export ZSHRC="$HOME/.config/zsh/.zshrc"
 export ALACRITTY_CONFIG="$HOME/.config/alacritty/alacritty.toml"
 export XORG_CONFIG="/etc/X11/xorg.conf"
 export PACMAN_CONFIG="/etc/pacman.conf"
 export AWESOME_CONFIG="$HOME/.config/awesome/rc.lua"
-
 export RUST_BACKTRACE=1
-export PROJECT_DIRECTORY="~/Projects"
+export PROJECT_DIRECTORY="$HOME/Projects"
 export SHELL="/bin/zsh"
-export STE="$HOME/Projects/rust-projects/simple-text-editor/"
-
-# End of lines added by compinstall
+export STE="$HOME/Projects/rust-projects/ste/"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="/usr/lib/rustup/bin/rust-analyzer:$PATH"
 
 # General
-alias update='sudo pacman -Syu; sudo yay -Syu' # Update pacman and AUR`
-alias fixmonitor='autorandr -l SceptreSamsung'
 alias mv='mv -i'
 alias rm='rm -i'
 alias vim='helix'
@@ -49,12 +71,12 @@ alias bigpackage='expac "%n %m" -l/'\n/' -Q $(pacman -Qq) | sort -rhk 2 | less'
 alias why='ncdu'
 alias h='history'
 alias ps='ps -au'
-alias k='setxkbmap us -v dvorak'
+alias k='setxkbmap us -v en'
 alias postgres='psql -U postgres'
 alias down='sudo shutdown now'
 
 # cd ez
-alias projd='cd ~/Projects'
+alias projd='cd $PROJECT_DIRECTORY'
 alias rustd='cd ~/Projects/rust-projects'
 alias steved='cd $PROJECT_DIRECTORY/steve-and-sons'
 alias ste='cd $STE'
@@ -72,15 +94,12 @@ alias sauce='source $ZSHRC'
 alias vim='helix'
 alias hx='helix'
 
-
 # OVERWRITES
 alias grep='grep --color=auto'
-alias ls='ls -lah --color=auto'
+alias ls='ls --color=auto'
 alias ll='ls -lah --color=auto'
 alias h='history'
 alias ps='ps -au'
-
-# AlIAS EDITING
 
 # Xorg CONTROL
 alias killx='pkill -15 Xorg'
@@ -117,13 +136,6 @@ alias enab='sudo systemctl enable'
 #Check internet connection
 alias internet='ping archlinux.org'
 
-# path for homegrown executables
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="/usr/lib/rustup/bin/rust-analyzer:$PATH"
-
-
 # Ergodox
 alias ergodox='helix $ERGO/keymap.c'
 alias keys='cat $HOME/.config/keymap.txt'
-
-# Look at disk usage by dir (pretty cool)

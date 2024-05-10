@@ -1,0 +1,95 @@
+
+# Universal excludes -- These apply to all subdirs
+- [Cc]ache
+- temp
+- tmp
+
+# These are transient
+- /temp
+- /.local/share/Trash
+- /.cache
+
+# These are too big to include
+- /Music
+- /Videos
+- /Pictures
+
+# Misc files/dirs to exclude
+- /boot/***
+- **/.cache/***
+- /usr/share/*
+- /backup/***
+- /yay-git/***
+- **/yay/***
+- **/nvim/***
+- /mnt/*
+- /dev/*
+- /sys/*
+- /tmp/*
+- /run/*
+- /proc/*
+- /media/*
+- **/icons/***
+- /var/swap
+- /var/log/journal/*
+- /lost+found/***
+- /.gradle
+- /*.gradle
+- qmk_firmware/***
+- /.npm
+- **/helix/***
+- **/.rustup
+- **/.cargo
+- **/target
+- node_modules/***
+- **/.git
+- .yarn
+- /.thumbnails/***
+- /.Trash/***
+- /lost+found/***
+- /venv/***
+- /.cargo/***
+- /Trash/***
+- /.rustup/***
+- __pycache__/
+- **/*.pyc
+- **/dist/
+- **/build/
+- **/bin/
+- **/obj/
+- **/out/
+- *.o
+- *.a
+- *.obj
+- .npm/***
+- /.next/***
+- *.so
+- **/*.dylib
+- *.log
+- /.abbrev_defs
+- /.adobe
+- /.aspell.en.
+- /.bogofilter
+- /.bzr.log
+- /.compiz/session
+- /.cpanplus
+- /.dbus
+- /.dc_history
+- /.dropbox
+- /.dropbox-dist
+- /.dvdcss
+- /.esd_auth
+- /.fontconfig
+- /.freemind/*.mm
+- /.gimp-2.6/tmp
+- /.gimp-2.6/swap
+- /.gksu.lock
+- /.googleearth/Cache
+- /.googleearth/Temp
+- /.gvfs
+- /.macromedia
+- /.marble/data
+- /.Trash
+- /.usbcreator.log
+- /.xsession-errors*
+
